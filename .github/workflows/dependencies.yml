@@ -7,10 +7,13 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v2
       - name: Checks dependencies
-        run: ./gradlew dependencyUpdates
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: dependencies-report
-          path: build/dependencyUpdates/report.txt
+        run: ./gradlew dependencyUpdates -DoutputFormatter=html
+      - run: sudo apt install tidy
+      - run: tidy build/dependencyUpdates/report.html #> build/dependencyUpdates/report2.html
+      - name: Upload HTML report
+        run: cat build/dependencyUpdates/report1.html
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: dependencies-report
+#          path: build/dependencyUpdates/report.txt
 
