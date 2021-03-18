@@ -1,0 +1,16 @@
+name: Upload dependencies report
+on: [pull_request, push]
+jobs:
+  dependencies-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+      - name: Checks dependencies
+        run: ./gradlew dependencyUpdates
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dependencies-report
+          path: build/dependencyUpdates/report.txt
+
